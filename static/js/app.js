@@ -35,12 +35,14 @@ submit.on("click", function () {
 
     console.log(inputValue);
 
-    var filteredData = data.filter(row => Date.parse(row.datetime) === Date.parse(inputValue));
+    // Filter array but make sure when filter value is empty, return (default) full data.
+    var filteredData = data.filter(row => Date.parse(row.datetime) === Date.parse(inputValue) || !inputValue);
 
     console.log(filteredData);
 
     // Delete current data on table before appending filtered data
-    d3.selectAll("tr").remove();
+    // Keep the headers of the table
+    d3.selectAll("tbody").selectAll("tr").remove();
 
     // Appending filtered data
     filteredData.forEach((row) => {
